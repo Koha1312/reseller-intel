@@ -63,3 +63,7 @@ in the cloud).
 
 *Demo uses mock eBay-shaped data. No real marketplace credentials or API keys are
 required or stored.*
+
+---
+
+<p align="center"><sub>Built by <b>Khoa Nguyen</b>, paired with Claude 💙</sub></p>

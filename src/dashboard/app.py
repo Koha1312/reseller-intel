@@ -86,6 +86,13 @@ def main() -> None:
 
     _render_table(filtered)
 
+    st.divider()
+    st.markdown(
+        "<p style='text-align:center;opacity:.6;font-size:13px'>"
+        "Built by <b>Khoa Nguyen</b>, paired with Claude 💙</p>",
+        unsafe_allow_html=True,
+    )
+
 
 def _render_sidebar_filters(df: pd.DataFrame) -> None:
     st.sidebar.header("Filters")
