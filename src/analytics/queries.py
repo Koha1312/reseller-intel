@@ -23,6 +23,7 @@ _COLUMNS = [
     "image_url",
     "buying_options",
     "location_country",
+    "status",
     "listing_date",
     "watch_count",
     "view_count",
@@ -92,6 +93,28 @@ def quality_signals_summary(df: pd.DataFrame) -> pd.DataFrame:
     signals = ["has_original_box", "has_tags", "has_authenticity_proof", "is_vintage"]
     rows = [{"signal": s, "count": int(df[s].fillna(False).sum())} for s in signals if s in df.columns]
     return pd.DataFrame(rows)
+
+
+def sell_through_rate(df: pd.DataFrame, by: str = "brand") -> pd.DataFrame:
+    """Sell-through rate (the reseller's #1 metric) grouped by `by`.
+
+    STR = sold listings / total listings. A high rate means the segment moves
+    fast — i.e. demand is strong relative to supply.
+    """
+    cols = [by, "sold", "total", "sell_through_pct"]
+    if df.empty or "status" not in df.columns:
+        return pd.DataFrame(columns=cols)
+
+    work = df.copy()
+    work["_sold"] = work["status"].fillna("").eq("sold")
+    grouped = (
+        work.groupby(work[by].fillna("(unknown)"))
+        .agg(sold=("_sold", "sum"), total=("_sold", "size"))
+        .reset_index()
+    )
+    grouped[by] = grouped[by].astype(str)
+    grouped["sell_through_pct"] = (grouped["sold"] / grouped["total"] * 100).round(1)
+    return grouped.sort_values("sell_through_pct", ascending=False)[cols]
 
 
 def price_stats(df: pd.DataFrame) -> dict:

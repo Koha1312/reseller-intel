@@ -28,7 +28,8 @@ data/*.json
 data/*.csv
 !data/.gitkeep
 
-# IDE
+# IDE / local agent tooling
+.claude/
 .vscode/
 .idea/
 *.swp

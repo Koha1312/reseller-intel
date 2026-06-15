@@ -1,0 +1,14 @@
+# Runtime deps for cloud deploy (Streamlit Community Cloud / Hugging Face Spaces).
+# These platforms use pip, not uv — keep this in sync with pyproject.toml.
+streamlit>=1.57.0
+pandas>=3.0.3
+numpy>=2.0
+plotly>=6.7.0
+sqlalchemy>=2.0.50
+pydantic>=2.13.4
+pydantic-settings>=2.14.1
+loguru>=0.7.3
+# Only used by the local "Generate insights" button (Ollama). Kept so the
+# button degrades gracefully in the cloud instead of crashing on import.
+instructor>=1.15.1
+openai>=2.38.0
